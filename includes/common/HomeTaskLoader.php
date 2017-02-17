@@ -14,7 +14,8 @@ use includes\controllers\admin\menu\HomeTaskMyPostsMenuController;
 use includes\controllers\admin\menu\HomeTaskMyThemeMenuController;
 use includes\controllers\admin\menu\HomeTaskMyToolsMenuController;
 use includes\controllers\admin\menu\HomeTaskMyUsersMenuController;
-
+use includes\example\HomeTaskExampleAction;
+use includes\example\HomeTaskExampleFilter;
 
 class HometaskLoader
 {
@@ -75,6 +76,13 @@ class HometaskLoader
     public function all(){
         HomeTaskLocalization::getInstance();
         HomeTaskLoaderScript::getInstance();
-
+	$HomeTaskExampleAction =  HomeTaskExampleAction::newInstance();
+        //$stepByStepExampleAction = StepByStepExampleAction::newInstance();
+        /*$stepByStepExampleFilter = StepByStepExampleFilter::newInstance();
+       $stepByStepExampleFilter->callMyFilter("Roman");
+       $stepByStepExampleFilter->callMyFilterAdditionalParameter("Roman", "Softgroup", "Poltava");
+       $stepByStepExampleAction = StepByStepExampleAction::newInstance();
+       $stepByStepExampleAction->callMyAction();
+       $stepByStepExampleAction->callMyActionAdditionalParameter( 'test1', 'test2', 'test3' );*/
     }
 }
