@@ -204,7 +204,7 @@ function sanitize_callback( $options ){
 
   return $options;
 }
-
+// Шорткод для базы данных
 function shortcode_db() {
  
     global $wpdb;
