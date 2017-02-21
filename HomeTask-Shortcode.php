@@ -204,7 +204,51 @@ function sanitize_callback( $options ){
 
   return $options;
 }
+// Шорткод для базы данных 
+function shortcode_db() {
+ 
+    global $wpdb;
+   
+    $table = $wpdb->prefix . "shortcode_table"; 
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+        `name` text NOT NULL,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+  
+    ob_start();
+    ?>
+    <form action="#v_form" method="post" id="v_form">
+        <label for="visitor_name"><h3>Привет, как тебя зовут?</h3></label>
+        <input type="text" name="visitor_name" id="visitor_name" />
+        <input type="submit" name="submit_form" value="submit" />
+    </form>
+    <?php
+    $html = ob_get_clean();
+   
+    if ( isset( $_POST["submit_form"] ) && $_POST["visitor_name"] != "" ) {
+        $table = $wpdb->prefix."shortcode_table";
+        $name = strip_tags($_POST["visitor_name"], "");
+        $wpdb->insert( 
+            $table, 
+            array( 
+                'name' => $name
+            )
+        );
+        $html = "<p>Твое имя<strong>$name</strong>успешно записано, спасибо!</p>";
+    }
 
+    if ( isset( $_POST["submit_form"] ) && $_POST["visitor_name"] == "" )
+        $html .= "<p>You need to fill the required fields.</p>";
+  
+    return $html;
+     
+}
+
+add_shortcode('shortcode_database', 'shortcode_db');
 
 
 
