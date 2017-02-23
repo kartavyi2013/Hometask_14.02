@@ -207,7 +207,7 @@ function sanitize_callback( $options ){
 
 
 
-
+add_action('widgets_init', create_function('', 'return register_widget("includes\widgets\HomeTaskWidget");'));
 register_activation_hook( __FILE__, array('includes\HomeTaskPlugin' ,  'activation' ) );
 register_deactivation_hook( __FILE__, array('includes\HomeTaskPlugin' ,  'deactivation' ) );
 
