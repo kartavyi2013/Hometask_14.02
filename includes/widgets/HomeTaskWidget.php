@@ -9,7 +9,7 @@ class HomeTaskWidget extends \WP_Widget {
     }
     public function widget( $args, $instance ) {
         $options = get_option( 'hometask_gmap_options' );
-        wp_enqueue_script( 'google_map_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBXctG_Vi99XjBqKc1oOWEXNPtaFoQo2hs');//?key='.$options['api_key'] );
+        wp_enqueue_script( 'google_map_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBXctG_Vi99XjBqKc1oOWEXNPtaFoQo2hs');
         wp_enqueue_script( 'HomeTaskWidget',  HOMETASKSHORTCODE_PlUGIN_URL.'/assets/admin/js/HomeTaskWidget.js', array( 'jquery' ) );
         $title = apply_filters( 'widget_title', $instance['title'] );
         $lat = 0;
@@ -41,7 +41,7 @@ class HomeTaskWidget extends \WP_Widget {
         echo $args['after_widget'];
     }
     public function form( $instance ) {
-        wp_enqueue_script( 'google_map_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBXctG_Vi99XjBqKc1oOWEXNPtaFoQo2hs');//?key='.$options['api_key'] );
+        wp_enqueue_script( 'google_map_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBXctG_Vi99XjBqKc1oOWEXNPtaFoQo2hs');
         wp_enqueue_script( 'HomeTaskAdminWidget',  HOMETASKSHORTCODE_PlUGIN_URL.'/assets/admin/js/HomeTaskAdminWidget.js', array( 'jquery' ) );
         ?>
         <div class="hometask_map_widget_ui unprocessed">
