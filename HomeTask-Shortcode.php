@@ -205,6 +205,92 @@ function sanitize_callback( $options ){
   return $options;
 }
 
+/ Создаю posttype функцию
+function HomePostType() {
+
+  register_post_type( 'movies',
+  // задаю опции
+    array(
+      'labels' => array(
+        'name' => __( 'Фильмы' ),
+        'singular_name' => __( 'Фильм' )
+      ),
+      'public' => true,
+      'has_archive' => true,
+      'rewrite' => array('slug' => 'movies'),
+    )
+  );
+}
+
+add_action( 'init', 'HomePostType' );
+
+/*
+* Создание кастомпосттайпа
+*/
+
+function custom_post_type() {
+
+
+  $labels = array(
+    'name'                => _x( 'Фильмы', 'Общее имя', 'twentyseventeen' ),
+    'singular_name'       => _x( 'Фильм', 'Одинорное имя', 'twentyseventeen' ),
+    'menu_name'           => __( 'Фильмы', 'twentyseventeen' ),
+    'parent_item_colon'   => __( 'Родительский фильм', 'twentyseventeen' ),
+    'all_items'           => __( 'Все Фильмы', 'twentyseventeen' ),
+    'view_item'           => __( 'Посмотреть фильм', 'twentyseventeen' ),
+    'add_new_item'        => __( 'Добавить новый фильм', 'twentyseventeen' ),
+    'add_new'             => __( 'Добавить новый', 'twentyseventeen' ),
+    'edit_item'           => __( 'Редактировать фильм', 'twentyseventeen' ),
+    'update_item'         => __( 'Обновить Фильм', 'twentyseventeen' ),
+    'search_items'        => __( 'Найти фильм', 'twentyseventeen' ),
+    'not_found'           => __( 'Не сущуствует', 'twentyseventeen' ),
+    'not_found_in_trash'  => __( 'Не сущуствует в корзине', 'twentyseventeen' ),
+  );
+  
+
+  
+  $args = array(
+    'label'               => __( 'Фильмы', 'twentyseventeen' ),
+    'description'         => __( 'Новости фильмов', 'twentyseventeen' ),
+    'labels'              => $labels,
+  
+    'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+
+    'taxonomies'          => array( 'genres' ),
+
+    'hierarchical'        => false,
+    'public'              => true,
+    'show_ui'             => true,
+    'show_in_menu'        => true,
+    'show_in_nav_menus'   => true,
+    'show_in_admin_bar'   => true,
+    'menu_position'       => 5,
+    'can_export'          => true,
+    'has_archive'         => true,
+    'exclude_from_search' => false,
+    'publicly_queryable'  => true,
+    'capability_type'     => 'post',
+  );
+  
+  // Регистрация Custom Post Type
+  register_post_type( 'movies', $args );
+
+}
+
+
+
+add_action( 'init', 'custom_post_type', 0 );
+
+//Вывод на сайт
+add_action( 'pre_get_posts', 'add_my_post_types_to_query' );
+
+function add_my_post_types_to_query( $query ) {
+  if ( is_home() && $query->is_main_query() )
+    $query->set( 'post_type', array( 'post', 'movies' ) );
+  return $query;
+}
+
+
 
 
 
